@@ -1,6 +1,10 @@
 var express = require("express");
 var router = express.Router();
 const Artist = require("./../models/artists.model");
+const uploader = require('./../config/cloudinary.config');
+const multer = require('./../config/multer');
+const Label = require("../models/labels.model");
+
 
 /* GET users listing. */
 router.get("/", function (req, res, next) {
@@ -23,10 +27,10 @@ router.get("/artists/create", function (req, res, next) {
   res.render("artistCreate.hbs");
 });
 
-router.post("/artists/create", async function (req, res, next) {
-  console.log(req.body);
+router.post("/artists/create", uploader.single('picture'), async function (req, res, next) {
+  console.log(req.file);
   try {
-    await Artist.create(req.body);
+    await Artist.create({ name: req.body.name, isBand: req.body.isBand, description: req.body.description, picture: req.file.path });
     res.redirect("/dashboard/artists");
   } catch (e) {
     next(e);
@@ -65,4 +69,33 @@ router.post("/artists/update/:id", async (req, res, next) => {
   }
 });
 
+/// *************** Labels routes *********************
+
+router.get("/labels", (req, res, next) => {
+  Label.find()
+    .then((dbResponse) => {
+      res.render('labels.hbs', {
+        labels: dbResponse,
+      })
+    })
+    .catch(e => console.error(e));
+})
+
+router.get("/labels/create", (req, res, next) => {
+  res.render('labelCreate.hbs');
+})
+
+router.post("/labels/create", uploader.single('logo'), async (req, res, next) => {
+  try {
+    console.log(req.body);
+    await Label.create({ name: req.body.name, city: req.body.city, country: req.body.country, street: req.body.street, streetNum: req.body.streetNum, zipcode: req.body.zipcode, logo: req.file.path });
+    res.redirect('/dashboard/labels');
+  } catch (e) {
+    next(e);
+  }
+})
+
+
 module.exports = router;
+
+

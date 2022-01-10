@@ -8,7 +8,6 @@ const artists = [{
     isBand: true,
     description: 'A noisy band',
     image: ' '
-
 }
 ]
 
