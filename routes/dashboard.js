@@ -95,6 +95,36 @@ router.post("/labels/create", uploader.single('logo'), async (req, res, next) =>
   }
 })
 
+router.get("/labels/delete/:id", async function (req, res, next) {
+  try {
+    await Label.findByIdAndDelete(req.params.id)
+    res.redirect('/dashboard/labels');
+  } catch (e) {
+    next(e);
+  }
+})
+
+router.get("/labels/update/:id", async function (req, res, next) {
+  try {
+    const updatedLabel = await Label.findById(req.params.id)
+    res.render('labelUpdate.hbs', { labels: updatedLabel });
+  } catch (e) {
+    next(e);
+  }
+})
+
+router.post("/labels/update/:id", uploader.single('logo'), async function (req, res, next) {
+  try {
+    const { name, city, country, street, streetNumber, zipcode } = req.body;
+    console.log(req.file);
+    await Label.findByIdAndUpdate(req.params.id, { name, city, country, street, streetNumber, zipcode, logo: req.file.path }
+    )
+    res.redirect('/dashboard/labels');
+  } catch (e) {
+    next(e);
+  }
+})
+
 
 module.exports = router;
 

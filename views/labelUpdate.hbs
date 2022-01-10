@@ -1,0 +1,24 @@
+<form action="/dashboard/labels/update/{{labels._id}}" method="post" enctype="multipart/form-data">
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name" value="{{labels.name}}">
+
+    <label for="city">City</label>
+    <input type="text" id="city" name="city" value="{{labels.city}}">
+
+    <label for="country">Country</label>
+    <input type="text" id="country" name="country" value="{{labels.country}}">
+
+    <label for="street">Street</label>
+    <input type="text" id="street" name="street" value="{{labels.street}}">
+
+    <label for="streetNumber">Street Number</label>
+    <input type="text" id="streetNumber" name="streetNumber" value="{{labels.streetNumber}}">
+
+    <label for="zipcode">Zipcode</label>
+    <input type="text" id="zipcode" name="zipcode" value="{{labels.zipcode}}">
+
+    <label for="logo">Logo</label>
+    <input type="file" id="logo" name="logo" value="{{labels.logo}}">
+
+    <button type="submit">Update</button>
+</form>
