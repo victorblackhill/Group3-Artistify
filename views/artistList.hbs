@@ -1,0 +1,24 @@
+<table>
+    <thead>
+        <tr>
+            <td>Picture</td>
+            <td>Name</td>
+            <td>Description</td>
+            <td>Band</td>
+            <td>Update</td>
+            <td>Delete</td>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each artists}}
+        <tr>
+            <td>{{this.picture}}</td>
+            <td>{{this.name}}</td>
+            <td>{{this.description}}</td>
+            <td>{{this.band}}</td>
+            <td>Update</td>
+            <td>Delete</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
